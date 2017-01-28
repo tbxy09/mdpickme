@@ -44,9 +44,10 @@ def plugin_entry_point():
     lines = vim.current.buffer
 
     target = parse_link(cursor, lines)
+    _logger.info('open %s', target)
     action = open_link(
         target,
-        current_file=vim.eval("expand('%:p:h')"),
+        current_file=vim.eval("expand('%:p')"),
         open_in_vim_extensions=extensions,
     )
     action()
@@ -170,6 +171,7 @@ def parse_link(cursor, lines):
         if m:
             return m.group(1).strip()
 
+    _logger.info('could not match for indirect link')
     return None
 
 
