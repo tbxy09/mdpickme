@@ -29,7 +29,31 @@ markdown link to open it.
 If the link is a local file it will be opened in vim, otherwise it will be
 opened by the current webbrowser.
 
-The behavior can be configured via the following options:
+The following links can be used (the possible cursor positions are indicated by
+`^`):
+
+
+    This [link](https://example.com) will be opened inside the browser.
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    This [link](./foo.md) will open `./foo.md` inside vim.
+         ^^^^^^^^^^^^^^^^
+
+    This [link](|filename|./foo.md) will open `./foo.md` inside vim.
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    If `g:mdnav#Extensions` is set to `.md, .MD`, enter will open
+    `example.pdf` inside the default PDF reader for this
+    [link](|filename|./example.pdf).
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+    Indirect [links][indirect-link] work too.
+             ^^^^^^^^^^^^^^^^^^^^^^
+
+    [indirect-link]: http://example.com
+
+
+The behavior of mdnav can be configured via the following options:
 
 - `g:mdnav#Extensions`:
     a comma separated list of file extensions.
