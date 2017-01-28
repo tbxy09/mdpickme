@@ -141,7 +141,7 @@ def parse_link(cursor, lines):
     line = lines[row]
 
     _logger.info('handle line %s (%s, %s)', line, row, column)
-    link_text = select_from_start_of_link(line, column)
+    link_text, rel_column = select_from_start_of_link(line, column)
 
     if not link_text:
         _logger.info('could not find link text')
@@ -151,6 +151,10 @@ def parse_link(cursor, lines):
 
     if not m:
         _logger.info('does not match link pattern')
+        return None
+
+    if m.end('link') <= rel_column:
+        _logger.info('cursor outside link')
         return None
 
     _logger.info('found match: %s', m.groups())
@@ -177,21 +181,23 @@ def parse_link(cursor, lines):
 
 link_pattern = re.compile(r'''
     ^
-    \[                  # start of link text
-        [^\]]*          # link text
-    \]                  # end of link text
-    (?:
-        \(                  # start of target
-            (?P<direct>
-                [^\)]*
-            )
-        \)                  # collect
-        |
-        \[
-            (?P<indirect>
-                [^\]]*
-            )
-        \]
+    (?P<link>
+        \[                  # start of link text
+            [^\]]*          # link text
+        \]                  # end of link text
+        (?:
+            \(                  # start of target
+                (?P<direct>
+                    [^\)]*
+                )
+            \)                  # collect
+            |
+            \[
+                (?P<indirect>
+                    [^\]]*
+                )
+            \]
+        )
     )
     .*                  # any non matching characters
     $
@@ -199,13 +205,22 @@ link_pattern = re.compile(r'''
 
 
 def select_from_start_of_link(line, pos):
+    """Return the start of the link string and the new cursor
+    """
     start = line[:pos].rfind('[')
     # TODO: handle escapes
 
     if start < 0:
-        return None
+        return None, pos
 
-    return line[start:]
+    # check for indirect links
+    if start != 0 and line[start - 1] == ']':
+        alt_start = line[:pos].find('[')
+
+        if alt_start >= 0:
+            start = alt_start
+
+    return line[start:], pos - start
 
 
 if __name__ == "__main__":
