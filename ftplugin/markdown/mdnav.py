@@ -256,8 +256,7 @@ def select_from_start_of_link(line, pos):
 
     # check for indirect links
     if start != 0 and line[start - 1] == ']':
-        alt_start = line[:pos].find('[')
-
+        alt_start = line[:start].rfind('[')
         if alt_start >= 0:
             start = alt_start
 
