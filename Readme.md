@@ -3,6 +3,9 @@
 Vim plugin for navigating links in markdown files.
 It can handle:
 
+- **internal link**:
+    for example `[Section 1](#section-1)`, will link to the heading 
+    `# Section 1`.
 - **direct links**:
     for example `[foo](bar.md)`.
 - **indirect links**:

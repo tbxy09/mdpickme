@@ -64,6 +64,9 @@ def open_link(target, current_file, open_in_vim_extensions=set()):
         _logger.info('no target')
         return NoOp(target)
 
+    if target.startswith('#'):
+        return JumpToAnchor(target)
+
     if not has_extension(target, open_in_vim_extensions):
         _logger.info('has no extension for opening in vim')
         return OSOpen(target)
@@ -134,6 +137,44 @@ class VimOpen(Action):
     def __call__(self):
         import vim
         vim.command('e {}'.format(self.target))
+
+
+class JumpToAnchor(Action):
+    heading_pattern = re.compile(r'^#+(?P<title>.*)$')
+
+    def __call__(self):
+        import vim
+        line = self.find_anchor(self.target, vim.current.buffer)
+
+        if line is None:
+            return
+
+        vim.current.window.cursor = (line + 1, 0)
+
+    @classmethod
+    def find_anchor(cls, target, buffer):
+        needle = cls.norm_target(target)
+
+        for (idx, line) in enumerate(buffer):
+            m = cls.heading_pattern.match(line)
+            if m is None:
+                continue
+
+            anchor = cls.title_to_anchor(m.group('title'))
+
+            if needle == anchor:
+                return idx
+
+    @staticmethod
+    def title_to_anchor(title):
+        return '-'.join(fragment.lower() for fragment in title.split())
+
+    @staticmethod
+    def norm_target(target):
+        if target.startswith('#'):
+            target = target[1:]
+
+        return target.lower()
 
 
 def parse_link(cursor, lines):

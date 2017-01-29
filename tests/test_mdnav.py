@@ -67,3 +67,17 @@ def test_open_link(target, open_link_kwargs, expected):
 
     assert actual == expected
 
+
+jump_to_anchor_cases = [
+    ('#foo', ['a', '# foo', 'b'], 1),
+    ('#foo-bar-baz', ['a', '#  Foo  BAR  Baz', 'b'], 1),
+    ('#foo', ['a', '#  Bar', 'b'], None),
+    ('#Foo-Bar-Baz', ['a', '### Foo Bar Baz', 'b'], 1),
+]
+
+
+@pytest.mark.parametrize('target, buffer, expected', jump_to_anchor_cases)
+def test_jump_to_anchor(target, buffer, expected):
+    actual = mdnav.JumpToAnchor.find_anchor(target, buffer)
+    assert actual == expected
+
