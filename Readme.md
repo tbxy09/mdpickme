@@ -28,9 +28,14 @@ more link formats and types of link targets (MD files, URLs, non text files,
 
 [fml]: https://github.com/prashanthellina/follow-markdown-links
 
+## Installation
+
+Install the plugin via your favorite plugin manager, say [Vundle][vundle]:
+
+    Plugin 'chmp/mdnav'
+
 ## Usage
 
-Install the plugin via your favorite plugin manager, say [Vundle][vundle].
 Inside normal model with an open markdown document, you may press enter on a
 markdown link to open it.
 If the link is a local file it will be opened in vim, otherwise it will be
