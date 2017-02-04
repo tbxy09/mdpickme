@@ -4,7 +4,7 @@ Vim plugin for navigating links in markdown files.
 It can handle:
 
 - **internal link**:
-    for example `[Section 1](#section-1)`, will link to the heading 
+    for example `[Section 1](#section-1)`, will link to the heading
     `# Section 1`.
 - **direct links**:
     for example `[foo](bar.md)`.
@@ -17,6 +17,10 @@ It can handle:
     documents, for example PDFs.
 - **local link format of pelican**:
     mdnav handles `|filename| ...` links as expected.
+- **links to headings**:
+    Headings can be linked to by using anchors, such as `[..](#usage)`.
+    Currently both github style anchors, all words lowercased and hyphenated,
+    and jupyter style anchros, all words hyphenated, are supported.
 
 While mdnav is inspired by [follow-markdown-links][fml], mdnav can handle many
 more link formats and types of link targets (MD files, URLs, non text files,
