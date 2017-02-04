@@ -54,6 +54,10 @@ The following links can be used (the possible cursor positions are indicated by
     [link](|filename|./example.pdf).
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+    Internal linking works, too: to link to the heading Usage, use
+    this [link](#usage).
+         ^^^^^^^^^^^^^^
+
     Indirect [links][indirect-link] work too.
              ^^^^^^^^^^^^^^^^^^^^^^
 
