@@ -3,24 +3,25 @@
 Vim plugin for navigating links in markdown files.
 It can handle:
 
-- **internal link**:
-    for example `[Section 1](#section-1)`, will link to the heading
-    `# Section 1`.
-- **direct links**:
-    for example `[foo](bar.md)`.
-- **indirect links**:
-    for links of the form `[foo][label]`, mdnav will lookup the corresponding
-    label and open the target referenced there.
+- **local text links**:
+    `[foo](bar.md)` will be opened inside vim.
+- **URL links**:
+    `[google](https://google.com)` will be opened with the OS browser.
 - **non text files**:
     if the option `g:mdnav#Extensions` is set, non text files will be opened
-    via the operating system. This behavior is handy when linking to binary
-    documents, for example PDFs.
-- **local link format of pelican**:
-    mdnav handles `|filename| ...` links as expected.
-- **links to headings**:
-    Headings can be linked to by using anchors, such as `[..](#usage)`.
+    via the operating system.
+    This behavior is handy when linking to binary documents, for example PDFs.
+- **internal links**:
+    `[Section 1](#section-1)`, will link to the heading `# Section 1`.
+    Following the link will jump to the heading inside vim.
     Currently both github style anchors, all words lowercased and hyphenated,
     and jupyter style anchros, all words hyphenated, are supported.
+- **reference style links**:
+    for links of the form `[foo][label]`, mdnav will lookup the corresponding
+    label and open the target referenced there.
+    This mechanism works will all link targets.
+- **local link format of pelican**:
+    mdnav handles `|filename| ...` links as expected.
 
 While mdnav is inspired by [follow-markdown-links][fml], mdnav can handle many
 more link formats and types of link targets (MD files, URLs, non text files,
@@ -63,10 +64,10 @@ The following links can be used (the possible cursor positions are indicated by
     this [link](#usage).
          ^^^^^^^^^^^^^^
 
-    Indirect [links][indirect-link] work too.
-             ^^^^^^^^^^^^^^^^^^^^^^
+    Reference style [links][ref-style-link] work too.
+                    ^^^^^^^^^^^^^^^^^^^^^^^
 
-    [indirect-link]: http://example.com
+    [ref-style-link]: http://example.com
 
 
 The behavior of mdnav can be configured via the following options:
