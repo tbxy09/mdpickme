@@ -35,12 +35,14 @@ Install the plugin via your favorite plugin manager, say [Vundle][vundle]:
 
     Plugin 'chmp/mdnav'
 
+To work, vim needs to be configured with python support.
+
 ## Usage
 
 Inside normal model with an open markdown document, you may press enter on a
 markdown link to open it.
-If the link is a local file it will be opened in vim, otherwise it will be
-opened by the current webbrowser.
+If the link is a local file it will be opened in vim (`C-o` will get you back),
+otherwise it will be opened by the current webbrowser.
 
 The following links can be used (the possible cursor positions are indicated by
 `^`):
@@ -81,8 +83,6 @@ The behavior of mdnav can be configured via the following options:
 
 - `g:mdnav#DebugMode`:
     if set to `true` it, extensive debug information will be logged.
-
-To work, vim needs to be configured with python support.
 
 ## Running tests
 
