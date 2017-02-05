@@ -5,6 +5,7 @@ import mdnav
 # following character
 parse_link_cases = [
     # default cases
+    (['foo ^[bar](baz.md)'], 'baz.md'),
     (['foo [b^ar](baz.md)'], 'baz.md'),
     (['foo [b^ar](baz.md) [bar](bar.md)'], 'baz.md'),
     (['foo [b^ar][bar]', '[bar]: baz.md'], 'baz.md'),
@@ -25,6 +26,7 @@ parse_link_cases = [
     (['][b^ar](bar.md)'], 'bar.md'),
 
     (["- [ ] checkout [la^bel][target] abs", "[target]: example.com"], "example.com"),
+    (["- [ ] checkout [label]^[target] abs", "[target]: example.com"], "example.com"),
     (["- [ ] checkout [label][tar^get] abs", "[target]: example.com"], "example.com"),
 ]
 

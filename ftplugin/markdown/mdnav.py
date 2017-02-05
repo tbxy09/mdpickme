@@ -248,7 +248,12 @@ link_pattern = re.compile(r'''
 def select_from_start_of_link(line, pos):
     """Return the start of the link string and the new cursor
     """
-    start = line[:pos].rfind('[')
+    if line[pos] == '[':
+        start = pos
+
+    else:
+        start = line[:pos].rfind('[')
+
     # TODO: handle escapes
 
     if start < 0:
