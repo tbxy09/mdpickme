@@ -248,7 +248,7 @@ link_pattern = re.compile(r'''
 def select_from_start_of_link(line, pos):
     """Return the start of the link string and the new cursor
     """
-    if line[pos] == '[':
+    if pos < len(line) and line[pos] == '[':
         start = pos
 
     else:

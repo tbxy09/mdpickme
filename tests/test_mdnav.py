@@ -25,6 +25,10 @@ parse_link_cases = [
     # malformed links
     (['][b^ar](bar.md)'], 'bar.md'),
 
+    # empty line
+    (['^'], None),
+
+    # multiple [] pairs
     (["- [ ] checkout [la^bel][target] abs", "[target]: example.com"], "example.com"),
     (["- [ ] checkout [label]^[target] abs", "[target]: example.com"], "example.com"),
     (["- [ ] checkout [label][tar^get] abs", "[target]: example.com"], "example.com"),
