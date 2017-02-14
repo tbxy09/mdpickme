@@ -62,7 +62,7 @@ def _find_cursor(lines):
 open_link_cases = [
     (None, {}, mdnav.NoOp(None)),
     ('baz.md', {}, mdnav.VimOpen('/abs/baz.md')),
-    ('baz.MD', {'open_in_vim_extensions': ['md']}, mdnav.OSOpen('baz.MD')),
+    ('baz.MD', {'open_in_vim_extensions': ['md']}, mdnav.OSOpen('/abs/baz.MD')),
     ('|filename|/foo/baz.md', {}, mdnav.VimOpen('/foo/baz.md')),
     ('/foo/bar.md', {}, mdnav.VimOpen('/foo/bar.md')),
     ('http://example.com', {}, mdnav.BrowserOpen('http://example.com')),

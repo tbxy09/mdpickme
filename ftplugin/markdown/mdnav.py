@@ -69,7 +69,7 @@ def open_link(target, current_file, open_in_vim_extensions=set()):
 
     if not has_extension(target, open_in_vim_extensions):
         _logger.info('has no extension for opening in vim')
-        return OSOpen(target)
+        return OSOpen(anchor_path(target, current_file))
 
     if has_scheme(target):
         _logger.info('has scheme -> open in browser')
@@ -78,13 +78,15 @@ def open_link(target, current_file, open_in_vim_extensions=set()):
     if target.startswith('|filename|'):
         target = target[len('|filename|'):]
 
+    return VimOpen(anchor_path(target, current_file))
+
+
+def anchor_path(target, current_file):
     if os.path.isabs(target):
-        _logger.info('is an absolute path')
-        return VimOpen(target)
+        return target
 
     _logger.info('anchor path relative to %s', current_file)
-    rel_target = os.path.join(os.path.dirname(current_file), target)
-    return VimOpen(rel_target)
+    return os.path.join(os.path.dirname(current_file), target)
 
 
 def has_extension(path, extensions):
