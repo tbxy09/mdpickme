@@ -4,7 +4,9 @@ Vim plugin for navigating links in markdown files.
 It can handle:
 
 - **local text links**:
-    `[foo](bar.md)` will be opened inside vim.
+    `[foo](bar.md)` will be opened inside vim. 
+    If the target contains line number as in `[foo](bar.md:30)`, the line will
+    be jumped to.
 - **URL links**:
     `[google](https://google.com)` will be opened with the OS browser.
 - **non text files**:
