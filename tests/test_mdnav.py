@@ -62,7 +62,10 @@ def _find_cursor(lines):
 open_link_cases = [
     (None, {}, mdnav.NoOp(None)),
     ('baz.md', {}, mdnav.VimOpen('/abs/baz.md')),
-    ('baz.MD', {'open_in_vim_extensions': ['md']}, mdnav.OSOpen('/abs/baz.MD')),
+    ('baz.md:20', {}, mdnav.VimOpen('/abs/baz.md:20')),
+    ('baz.MD', {'open_in_vim_extensions': ['.md']}, mdnav.OSOpen('/abs/baz.MD')),
+    ('baz.md', {'open_in_vim_extensions': ['.md']}, mdnav.VimOpen('/abs/baz.md')),
+    ('baz.md:20', {'open_in_vim_extensions': ['.md']}, mdnav.VimOpen('/abs/baz.md:20')),
     ('|filename|/foo/baz.md', {}, mdnav.VimOpen('/foo/baz.md')),
     ('/foo/bar.md', {}, mdnav.VimOpen('/foo/bar.md')),
     ('http://example.com', {}, mdnav.BrowserOpen('http://example.com')),
@@ -89,4 +92,16 @@ jump_to_anchor_cases = [
 def test_jump_to_anchor(target, buffer, expected):
     actual = mdnav.JumpToAnchor.find_anchor(target, buffer)
     assert actual == expected
+
+
+@pytest.mark.parametrize('path, expected_path, expected_line', [
+    ('foo.md', 'foo.md', None),
+    ('foo:bar.md', 'foo:bar.md', None),
+    ('foo.md:30', 'foo.md', '30'),
+])
+def test_parse_path(path, expected_path, expected_line):
+    path = mdnav.parse_path(path)
+
+    assert path.path == expected_path
+    assert path.line == expected_line
 

@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+import collections
 import os.path
 import re
 import sys
@@ -93,7 +94,8 @@ def has_extension(path, extensions):
     if not extensions:
         return True
 
-    _, ext = os.path.splitext(path)
+    path = parse_path(path)
+    _, ext = os.path.splitext(path.path)
     return ext in extensions
 
 
@@ -138,7 +140,13 @@ class OSOpen(Action):
 class VimOpen(Action):
     def __call__(self):
         import vim
-        vim.command('e {}'.format(self.target))
+
+        path = parse_path(self.target)
+
+        # TODO: make space handling more robust?
+        vim.command('e {}'.format(path.path.replace(' ', '\\ ')))
+        if path.line is not None:
+            vim.command(':{}'.format(path.line))
 
 
 class JumpToAnchor(Action):
@@ -177,6 +185,19 @@ class JumpToAnchor(Action):
             target = target[1:]
 
         return target.lower()
+
+
+def parse_path(path):
+    path, ext = os.path.splitext(path)
+    if ':' in ext:
+        ext, line = ext.rsplit(':', 1)
+        return ParsedPath(path=path + ext, line=line)
+
+    return ParsedPath(path=path + ext, line=None)
+
+
+class ParsedPath(collections.namedtuple('ParsedPath', ['path', 'line'])):
+    pass
 
 
 def parse_link(cursor, lines):
