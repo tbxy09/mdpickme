@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import collections
+import json
 import os.path
 import re
 import sys
@@ -68,13 +69,13 @@ def open_link(target, current_file, open_in_vim_extensions=set()):
     if target.startswith('#'):
         return JumpToAnchor(target)
 
-    if not has_extension(target, open_in_vim_extensions):
-        _logger.info('has no extension for opening in vim')
-        return OSOpen(anchor_path(target, current_file))
-
     if has_scheme(target):
         _logger.info('has scheme -> open in browser')
         return BrowserOpen(target)
+
+    if not has_extension(target, open_in_vim_extensions):
+        _logger.info('has no extension for opening in vim')
+        return OSOpen(anchor_path(target, current_file))
 
     if target.startswith('|filename|'):
         target = target[len('|filename|'):]
@@ -128,10 +129,10 @@ class BrowserOpen(Action):
 class OSOpen(Action):
     def __call__(self):
         if sys.platform.startswith('linux'):
-            subprocess.call(['xdg-open', self.target])
+            call(['xdg-open', self.target])
 
         elif sys.platform.startswith('darwin'):
-            subprocess.call(['open', self.target])
+            call(['open', self.target])
 
         else:
             os.startfile(self.target)
@@ -185,6 +186,20 @@ class JumpToAnchor(Action):
             target = target[1:]
 
         return target.lower()
+
+
+def call(args):
+    """If available use vims shell mechanism to work around display issues
+    """
+    try:
+        import vim
+
+    except ImportError:
+        subprocess.call(args)
+
+    else:
+        args = ['shellescape(' + json.dumps(arg) + ')' for arg in args]
+        vim.command('execute "! " . ' + ' . " " . '.join(args))
 
 
 def parse_path(path):
