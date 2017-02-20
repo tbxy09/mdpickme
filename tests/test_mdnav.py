@@ -12,6 +12,9 @@ parse_link_cases = [
     (['foo [b^ar][bar]', '[bar]: |filename|./baz.md'], '|filename|./baz.md'),
     (['foo [b^ar][bar] [bar][baz]', '[bar]: |filename|./baz.md'], '|filename|./baz.md'),
 
+    # empty link target
+    (['foo [b^ar][]', '[bar]: baz.md'], 'baz.md'),
+
     # cursor outside link area
     (['foo^  [bar](baz.md) '], None),
     (['foo ^ [bar](baz.md) '], None),
@@ -69,6 +72,7 @@ open_link_cases = [
     ('|filename|/foo/baz.md', {}, mdnav.VimOpen('/foo/baz.md')),
     ('/foo/bar.md', {}, mdnav.VimOpen('/foo/bar.md')),
     ('http://example.com', {}, mdnav.BrowserOpen('http://example.com')),
+    ('http://example.com', {'open_in_vim_extensions': ['.md']}, mdnav.BrowserOpen('http://example.com')),
 ]
 
 

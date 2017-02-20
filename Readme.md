@@ -4,7 +4,7 @@ Vim plugin for navigating links in markdown files.
 It can handle:
 
 - **local text links**:
-    `[foo](bar.md)` will be opened inside vim. 
+    `[foo](bar.md)` will be opened inside vim.
     If the target contains line number as in `[foo](bar.md:30)`, the line will
     be jumped to.
 - **URL links**:
@@ -22,6 +22,9 @@ It can handle:
     for links of the form `[foo][label]`, mdnav will lookup the corresponding
     label and open the target referenced there.
     This mechanism works will all link targets.
+- **imlicit name links**:
+    for links of the form `[foo][]` will use `foo` as the label and then follow
+    the logic of reference style links.
 - **local link format of pelican**:
     mdnav handles `|filename| ...` links as expected.
 

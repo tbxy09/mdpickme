@@ -244,8 +244,12 @@ def parse_link(cursor, lines):
         return m.group('direct')
 
     _logger.info('follow indirect link %s', m.group('indirect'))
+    indirect_ref = m.group('indirect')
+    if not indirect_ref:
+        indirect_ref = m.group('text')
+
     indrect_link_pattern = re.compile(
-        r'^\[' + re.escape(m.group('indirect')) + r'\]:(.*)$'
+        r'^\[' + re.escape(indirect_ref) + r'\]:(.*)$'
     )
 
     for line in lines:
@@ -261,9 +265,9 @@ def parse_link(cursor, lines):
 link_pattern = re.compile(r'''
     ^
     (?P<link>
-        \[                  # start of link text
-            [^\]]*          # link text
-        \]                  # end of link text
+        \[                      # start of link text
+            (?P<text>[^\]]*)    # link text
+        \]                      # end of link text
         (?:
             \(                  # start of target
                 (?P<direct>
