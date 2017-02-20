@@ -14,6 +14,8 @@ parse_link_cases = [
 
     # empty link target
     (['foo [b^ar][]', '[bar]: baz.md'], 'baz.md'),
+    (['foo [@b^ar][]', '[@bar]: baz.md'], 'baz.md'),
+    (['foo [^@bar][]', '[@bar]: baz.md'], 'baz.md'),
 
     # cursor outside link area
     (['foo^  [bar](baz.md) '], None),
