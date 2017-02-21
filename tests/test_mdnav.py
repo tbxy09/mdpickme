@@ -91,6 +91,12 @@ jump_to_anchor_cases = [
     ('#foo-bar-baz', ['a', '#  Foo  BAR  Baz', 'b'], 1),
     ('#foo', ['a', '#  Bar', 'b'], None),
     ('#Foo-Bar-Baz', ['a', '### Foo Bar Baz', 'b'], 1),
+
+    # use attr-lists to define custom ids
+    ('#hello-world', ['a', '### Foo Bar Baz {: #hello-world } ', 'b'], 1),
+
+    # first match wins
+    ('#hello-world', ['# hello world', '### Foo Bar Baz {: #hello-world } ', 'b'], 0),
 ]
 
 

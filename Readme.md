@@ -25,6 +25,11 @@ It can handle:
 - **imlicit name links**:
     for links of the form `[foo][]` will use `foo` as the label and then follow
     the logic of reference style links.
+- **custom ids via attribute lists**:
+    the id a link target can be defined via [attribute lists][attr-lists] of
+    the form `{: #someid ...}`.
+    This way fixed name references can be defined to prevent links from going
+    stale after headings have been changed.
 - **local link format of pelican**:
     mdnav handles `|filename| ...` links as expected.
 
@@ -33,6 +38,7 @@ more link formats and types of link targets (MD files, URLs, non text files,
 ...).
 
 [fml]: https://github.com/prashanthellina/follow-markdown-links
+[attr-lists]: https://pythonhosted.org/Markdown/extensions/attr_list.html
 
 ## Installation
 

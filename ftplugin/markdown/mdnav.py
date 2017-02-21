@@ -152,6 +152,7 @@ class VimOpen(Action):
 
 class JumpToAnchor(Action):
     heading_pattern = re.compile(r'^#+(?P<title>.*)$')
+    attr_list_pattern = re.compile(r'{:\s+#(?P<id>\S+)\s')
 
     def __call__(self):
         import vim
@@ -168,12 +169,14 @@ class JumpToAnchor(Action):
 
         for (idx, line) in enumerate(buffer):
             m = cls.heading_pattern.match(line)
-            if m is None:
-                continue
+            if (
+                m is not None and
+                cls.title_to_anchor(m.group('title')) == needle
+            ):
+                return idx
 
-            anchor = cls.title_to_anchor(m.group('title'))
-
-            if needle == anchor:
+            m = cls.attr_list_pattern.search(line)
+            if m is not None and needle == m.group('id'):
                 return idx
 
     @staticmethod
