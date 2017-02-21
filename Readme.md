@@ -4,9 +4,10 @@ Vim plugin for navigating links in markdown files.
 It can handle:
 
 - **local text links**:
-    `[foo](bar.md)` will be opened inside vim.
-    If the target contains line number as in `[foo](bar.md:30)`, the line will
-    be jumped to.
+    `[foo](second.md)` will be opened inside vim.
+    If the target contains line number as in `[foo](second.md:30)`, the line
+    will be jumped to.
+    Also anchors are supported, for example `[foo](second.md#custom-id)`.
 - **URL links**:
     `[google](https://google.com)` will be opened with the OS browser.
 - **non text files**:
@@ -14,7 +15,7 @@ It can handle:
     via the operating system.
     This behavior is handy when linking to binary documents, for example PDFs.
 - **internal links**:
-    `[Section 1](#section-1)`, will link to the heading `# Section 1`.
+    `[Section](#Installation)`, will link to the heading `# Section 1`.
     Following the link will jump to the heading inside vim.
     Currently both github style anchors, all words lowercased and hyphenated,
     and jupyter style anchros, all words hyphenated, are supported.
@@ -31,12 +32,16 @@ It can handle:
     This way fixed name references can be defined to prevent links from going
     stale after headings have been changed.
 - **local link format of pelican**:
-    mdnav handles `|filename| ...` links as expected.
+    mdnav handles `|filename| ...` links as expected, for example
+    `[link](|filename|./second.md)`.
 
+Note, all links above are functional with vim and mdnav installed.
 While mdnav is inspired by [follow-markdown-links][fml], mdnav can handle many
 more link formats and types of link targets (MD files, URLs, non text files,
 ...).
 
+[label]: https://google.com
+[foo]: https://wikipedia.org
 [fml]: https://github.com/prashanthellina/follow-markdown-links
 [attr-lists]: https://pythonhosted.org/Markdown/extensions/attr_list.html
 
