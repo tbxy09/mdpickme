@@ -106,14 +106,17 @@ def test_jump_to_anchor(target, buffer, expected):
     assert actual == expected
 
 
-@pytest.mark.parametrize('path, expected_path, expected_line', [
-    ('foo.md', 'foo.md', None),
-    ('foo:bar.md', 'foo:bar.md', None),
-    ('foo.md:30', 'foo.md', '30'),
+@pytest.mark.parametrize('path, expected_path, expected_line, expected_anchor', [
+    ('foo.md', 'foo.md', None, None),
+    ('foo:bar.md', 'foo:bar.md', None, None),
+    ('foo.md:30', 'foo.md', '30', None),
+    ('foo.md#hello-world', 'foo.md', None, 'hello-world'),
+    ('foo.md#happy:)', 'foo.md', None, 'happy:)'),
 ])
-def test_parse_path(path, expected_path, expected_line):
+def test_parse_path(path, expected_path, expected_line, expected_anchor):
     path = mdnav.parse_path(path)
 
     assert path.path == expected_path
     assert path.line == expected_line
+    assert path.anchor == expected_anchor
 

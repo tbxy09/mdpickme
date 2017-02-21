@@ -147,7 +147,18 @@ class VimOpen(Action):
         # TODO: make space handling more robust?
         vim.command('e {}'.format(path.path.replace(' ', '\\ ')))
         if path.line is not None:
-            vim.command(':{}'.format(path.line))
+            try:
+                line = int(path.line)
+
+            except:
+                print('invalid line number')
+                return
+
+            else:
+                vim.current.window.cursor = (line, 0)
+
+        if path.anchor is not None:
+            JumpToAnchor(path.anchor)()
 
 
 class JumpToAnchor(Action):
@@ -206,16 +217,34 @@ def call(args):
 
 
 def parse_path(path):
+    """Parse a path with optional line number of anchor into its parts.
+
+    For example::
+
+        parse_path('foo.md:30') == ParsedPath('foo.md', line=30)
+        parse_path('foo.md#anchor') == ParsedPath('foo.md', anchor='anchor')
+
+    """
     path, ext = os.path.splitext(path)
+    if '#' in ext:
+        ext, anchor = ext.rsplit('#', 1)
+        return ParsedPath(path + ext, anchor=anchor)
+
     if ':' in ext:
         ext, line = ext.rsplit(':', 1)
-        return ParsedPath(path=path + ext, line=line)
+        return ParsedPath(path + ext, line=line)
 
-    return ParsedPath(path=path + ext, line=None)
+    return ParsedPath(path + ext)
 
 
-class ParsedPath(collections.namedtuple('ParsedPath', ['path', 'line'])):
-    pass
+class ParsedPath(object):
+    def __init__(self, path, line=None, anchor=None):
+        self.path = path
+        self.line = line
+        self.anchor = anchor
+
+    def __repr__(self):
+        return 'ParsedPath({!r}, line={}, anchor={!r})'.format(self.path, self.line, self.anchor)
 
 
 def parse_link(cursor, lines):
