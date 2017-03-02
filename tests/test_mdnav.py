@@ -37,6 +37,12 @@ parse_link_cases = [
     (["- [ ] checkout [la^bel][target] abs", "[target]: example.com"], "example.com"),
     (["- [ ] checkout [label]^[target] abs", "[target]: example.com"], "example.com"),
     (["- [ ] checkout [label][tar^get] abs", "[target]: example.com"], "example.com"),
+
+    # reference definitions
+    (["[f^oo]: test.md"], "test.md"),
+    (["[foo]: test.md^"], "test.md"),
+    (["[foo]: ^test.md"], "test.md"),
+    (["^[foo]: test.md"], "test.md"),
 ]
 
 

@@ -252,6 +252,10 @@ def parse_link(cursor, lines):
     line = lines[row]
 
     _logger.info('handle line %s (%s, %s)', line, row, column)
+    m = reference_definition_pattern.match(line)
+    if m is not None:
+        return m.group('link').strip()
+
     link_text, rel_column = select_from_start_of_link(line, column)
 
     if not link_text:
@@ -293,6 +297,13 @@ def parse_link(cursor, lines):
     _logger.info('could not match for indirect link')
     return None
 
+
+reference_definition_pattern = re.compile(r'''
+    ^
+        \[[^\]]*\]:             # reference def at start of line
+        (?P<link>.*)            # interpret everything else as link text
+    $
+''', re.VERBOSE)
 
 link_pattern = re.compile(r'''
     ^
