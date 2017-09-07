@@ -15,7 +15,7 @@ It can handle:
     via the operating system.
     This behavior is handy when linking to binary documents, for example PDFs.
 - **internal links**:
-    `[Section](#Installation)`, will link to the heading `# Section 1`.
+    `[Link Text](#Target)`, will link to the heading `# Target`.
     Following the link will jump to the heading inside vim.
     Currently both github style anchors, all words lowercased and hyphenated,
     and jupyter style anchros, all words hyphenated, are supported.
@@ -23,7 +23,7 @@ It can handle:
     for links of the form `[foo][label]`, mdnav will lookup the corresponding
     label and open the target referenced there.
     This mechanism works will all link targets.
-- **imlicit name links**:
+- **implicit name links**:
     for links of the form `[foo][]` will use `foo` as the label and then follow
     the logic of reference style links.
 - **custom ids via attribute lists**:
