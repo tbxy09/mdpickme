@@ -5,4 +5,4 @@
 let g:mdnav#PythonScript = expand('<sfile>:r') . '.py'
 
 command! MDNavExec execute 'pyfile ' . g:mdnav#PythonScript
-nnoremap <CR> :MDNavExec<CR>
+nnoremap <buffer> <CR> :MDNavExec<CR>
