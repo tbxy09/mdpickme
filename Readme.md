@@ -1,9 +1,9 @@
 ## action workflow
 
-choosed line
->> a new focus window
->> with the markup suggestions render as a selection list
->> sync back to original buffer
+ * choosed line
+ * a new focus window
+ * with the markup suggestions render as a selection list
+ * sync back to original buffer
 
 ## baseline project
 [mdnav](mdnav.md)
