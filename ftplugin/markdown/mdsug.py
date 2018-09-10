@@ -191,17 +191,20 @@ class VimOpen(Action):
         '##### {}'.format(target),
         '###### {}'.format(target),
         '**{}**'.format(target),
+        '``` {} ```'.format(target),
+        "'{}'".format(target),
         '*{}*'.format(target),
         '* {}'.format(target),
         '- {}'.format(target),
         '+ {}'.format(target),
-        "[{0}]({1})".format(target.split('/')[-1],target),
+        '1. {}'.format(target),
+        "[{0}]({1})".format(target.strip('/').split('/')[-1],target),
         '| ------ |:-----:| -----:|',
         ]
 
         # mylist=[each.replace('DATA',target) for each in mylist]
 
-        vim.command('execute Tagredir({})'.format(mylist))
+        vim.command('execute BPop({})'.format(mylist))
         # if path.line is not None:
         #     try:
         #         line = int(path.line)

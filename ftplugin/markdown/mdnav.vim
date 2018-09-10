@@ -5,7 +5,7 @@
 let g:mdnav#PythonScript = expand('<sfile>:r') . '.py'
 let g:mdsug#PythonScript = '/data/dotfiles_xy/nvim/plugged/mdnav/ftplugin/markdown/mdsug.py'
 
-function! Tagredir(mylist)
+function! BPop(mylist)
   let color = '{ x = $1; $1 = ""; z = $3; $3 = ""; printf "\033[34m%s\033[0m:\033[31m%s\033[0m\011\033[37m%s\033[0m\n", x,z,$0; }'
   " \ 'source':  "cscope -dL" . a:option . " " . a:query . " | awk '" . color . "'",
   " \ 'source':  "ls"."|awk '" . color . "'",
@@ -17,10 +17,12 @@ function! Tagredir(mylist)
   \             '--color', 'fg:188,fg+:222,bg+:#3a3a3a,hl+:104'],
   \ 'down': '40%'
   \ }
-  function! opts.sink(lines)
-    echo a:lines
+  function! opts.sink(line)
+    echom a:line
     setlocal cursorline
-    call setline(line('.'), [a:lines])
+		" let parsedLine  = substitute(a:line, ',\s*', '\r', "g")
+    call setline(line('.'), [a:line])
+		silent! exec 's/```\s*/\r```\r/g'
   endfunction
   call fzf#run(opts)
 endfunction
