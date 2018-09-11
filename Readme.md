@@ -1,31 +1,39 @@
+## A new casual way to format your md files
 
-![mdpickme.gif](http://192.168.1.102:7778/mdpickmeheader.gif)
+![mdpickmelink.gif](https://oneyardline.cn/mdpickmelink.gif)
+
 
 ## action workflow
 
- * choosed line
- * a new focus window
- * with the markup suggestions render as a selection list
- * sync back to original buffer
+ * select line
+ * a new focus window from bottom
+ * a selection list with markup suggestions
+ * render the selected line
+
+
+When you choose a header
+![mdpickmeheader.gif](https://oneyardline.cn/mdpickmeheader.gif)
 
 ## baseline project
 
-[mdnav](mdnav.md)
+[https://github.com/chmp/mdnav]( https://github.com/chmp/mdnav)
 
 1. it use python language to do the buffer parser work
 2. it use python 'print' to debug the python file
 3. it has similar interaction I want to create, choose a line, and parser the line, and then do the result action
 
-```
-nvim -V9myvim.log
-```
+	nvim -V9myvim.log
+
 with this nvim launch code line, you can log out the print code you embeded into,both
 in the log file 'myvim.log', and the vim output window
 
-## improvement and bug
+## Installation
 
-1. the chinese character handeling
-2. multiline code choosing and format
-3. a blank line after each header
-some thoughts here
-setline is the main API to get the buffer from python parser, it can not recognize the breakline from linebuffer, can it input with a multilines, need further check here
+### Installation using [Vim-Plug](https://github.com/junegunn/vim-plug)
+
+Add the following to the plugin-configuration in your vimrc:
+
+	Plug 'tbxy09/mdpickme'
+
+Then run `:PlugInstall`.
+
